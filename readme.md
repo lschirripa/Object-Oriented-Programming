@@ -1,5 +1,5 @@
 ### What these projects are about?
-- Those programs coded in Prolog, were part of Exams and some university projects made in group.
+- Those programs coded in Wollok, were part of Exams and some university projects made in group.
 
 - All of them simulate being kind of a game with their respectively requirements in each readme.md
 
