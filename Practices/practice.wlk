@@ -110,7 +110,7 @@ object devilMayLaughVI {
 	}
 
 	method jugar(horas) {
-		nivelDeSangre = nivelDeSangre + 1 + (horas*0)
+		nivelDeSangre = nivelDeSangre + 1 + (horas * 0)
 	}
 
 	method esViolento() {
@@ -120,26 +120,32 @@ object devilMayLaughVI {
 }
 
 //bibliotecaJuegos - Listas
-object biblioteca{
-var property juegos = [timbaElLeon, carlosDuty]
-var property puntos = 0
+object biblioteca {
 
-method adquirirJuego(unJuego){
-juegos.add(unJuego)
-puntos = puntos + 150
-}
+	var property juegos = [ timbaElLeon, carlosDuty ]
+	var property puntos = 0
+	var juegosViolentos = juegos.filter({ unJuego => unJuego.esViolento() })
 
-method borrarJuego(unJuego){
-juegos.remove(unJuego)
-}
+	method adquirirJuego(unJuego) {
+		juegos.add(unJuego)
+		puntos = puntos + 150
+	}
 
-method esDeGamer(){
-	return puntos>1000 && juegos.size() > 5
-}
+	method borrarJuego(unJuego) {
+		juegos.remove(unJuego)
+	}
 
-method esJuegoRecomendable(unJuego){
-	return (not juegos.contains(unJuego)) && unJuego.esViolento()
-}
+	method juegosViolentos() {
+		return juegosViolentos
+	}
+
+	method esDeGamer() {
+		return puntos > 1000 && juegos.size() > 5
+	}
+
+	method esJuegoRecomendable(unJuego) {
+		return (not juegos.contains(unJuego)) && unJuego.esViolento()
+	}
 
 }
 
