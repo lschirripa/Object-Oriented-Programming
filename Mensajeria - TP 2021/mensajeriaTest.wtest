@@ -1,96 +1,164 @@
 import mensajeria.*
 
 describe "test de chasqui" {
-	
+
 	test "no debe poder enviar un mensaje largo" {
-		
-		assert.notThat( chasqui.puedeEnviarEseMensaje("12345678901234567890123456789012345678901234567890"))
-			}
+		assert.notThat(chasqui.puedeEnviarEseMensaje("12345678901234567890123456789012345678901234567890"))
+	}
 
 	test "debe poder enviar un mensaje corto" {
-		
-		assert.that( chasqui.puedeEnviarEseMensaje("1234567890123456789012345678901234567890123456789"))
-			}
-		
+		assert.that(chasqui.puedeEnviarEseMensaje("1234567890123456789012345678901234567890123456789"))
+	}
+
 	test "costo por enviar un mensaje" {
-		
-		assert.equals(24,chasqui.costoMensaje("123456789012"))
-			}
+		assert.equals(24, chasqui.costoMensaje("123456789012"))
+	}
+
 }
 
 describe "test de sherpa" {
-	
-	test "jamas debe poder enviar un mensaje con tamaño impar"{
-		
-		assert.notThat( sherpa.puedeEnviarEseMensaje("123456789"))
-			}
-	
-	test "debe poder enviar un mensaje con tamaño par"{
-		
-		assert.that( sherpa.puedeEnviarEseMensaje("1234567890"))
-			}
-	
+
+	test "jamas debe poder enviar un mensaje con tamaño impar" {
+		assert.notThat(sherpa.puedeEnviarEseMensaje("123456789"))
+	}
+
+	test "debe poder enviar un mensaje con tamaño par" {
+		assert.that(sherpa.puedeEnviarEseMensaje("1234567890"))
+	}
+
 	test "costo por enviar un mensaje" {
-		
 		assert.equals(60, sherpa.costoMensaje("1234567890"))
-			}
+	}
+
 }
 
 describe "test de messich" {
-	
-	test "no debe poder enviar un mensaje que comience con a"{
-		
+
+	test "no debe poder enviar un mensaje que comience con a" {
 		assert.notThat(messich.puedeEnviarEseMensaje("abracadabra"))
-			}
-			
-	test "debe poder enviar un mensaje que no comience con a"{
-		
+	}
+
+	test "debe poder enviar un mensaje que no comience con a" {
 		assert.that(messich.puedeEnviarEseMensaje("pata de cabra"))
-			}
-			
+	}
+
 	test "costo por enviar un mensaje" {
-		
 		assert.equals(30, messich.costoMensaje("pata de cabra"))
-			}
+	}
+
 }
 
 describe "test de pali" {
-	
-	test "no debe poder enviar un mensaje que no es palindromo"{
-		
+
+	test "no debe poder enviar un mensaje que no es palindromo" {
 		assert.notThat(pali.puedeEnviarEseMensaje("abracadabra"))
-			}
-			
-	test "debe poder enviar un mensaje que es palindromo"{
-		
+	}
+
+	test "debe poder enviar un mensaje que es palindromo" {
 		assert.that(pali.puedeEnviarEseMensaje("Anita lava la tina"))
-			}
-			
+	}
+
 	test "costo por enviar un mensaje corto" {
-		
 		assert.equals(72, pali.costoMensaje("Anita lava la tina"))
-			}
+	}
+
 	test "costo por enviar un mensaje largo" {
-		
 		assert.equals(80, pali.costoMensaje("Allí va Ramón y no maravilla"))
-			}		
-			
+	}
+
 }
 
 describe "test de mensajeria" {
-	
-	test "para mandar mensaje se elige a messich"{
-		
-		assert.equals(messich ,agenciaDeMensajeria.mensajeroElegido("nomelacont"))
-			}
-			
-	test "para mandar mensaje se elige a chasqui"{
-		
-		assert.equals(chasqui ,agenciaDeMensajeria.mensajeroElegido("hola chau hola chau hola chau hola chau hola chau"))
-			}
-			
+
+	test "para mandar mensaje se elige a messich" {
+		assert.equals(messich, agenciaDeMensajeria.mensajeroElegido("nomelacont"))
+	}
+
+	test "para mandar mensaje se elige a chasqui" {
+		assert.equals(chasqui, agenciaDeMensajeria.mensajeroElegido("hola chau hola chau hola chau hola chau hola chau"))
+	}
+
 	test "para mandar mensaje se elige a sherpa" {
-		
-		assert.equals(sherpa , agenciaDeMensajeria.mensajeroElegido("al cortar los tomates en juliana, luego hay que sofreirlos con ajo y morrón verde o rojo si no se tiene a mano"))
-			}
-	}	
+		assert.equals(sherpa, agenciaDeMensajeria.mensajeroElegido("al cortar los tomates en juliana, luego hay que sofreirlos con ajo y morrón verde o rojo si no se tiene a mano"))
+	}
+
+	test"para mandar mensaje se elige a EnviosEstandares" {
+		assert.equals(enviosEstandares, agenciaDeMensajeria.mensajeroElegido("ahhohkaskdkajsdkajsdklhlhha"))
+	}
+
+	test"para mandar este mensaje NO se elije a enviosRapidos porque su competencia es mas barata" {
+		assert.notThat(agenciaDeMensajeria.mensajeroElegido("Enviame Esta") == enviosRapidos)
+	}
+
+	test"para mandar este mensaje NO se elije a enviosVIP porque su competencia es mas barata" {
+		assert.notThat(agenciaDeMensajeria.mensajeroElegido("Enviame Esta tambien") == enviosVip)
+	}
+
+	test "Excepcion de mensaje vacio" {
+		assert.throwsExceptionWithMessage("El mensaje esta vacio", { agenciaDeMensajeria.recibirMensaje("")})
+	}
+
+	test "Ganancia neta del mes" {
+		agenciaDeMensajeria.registrarMensaje("hola mundo")
+		agenciaDeMensajeria.registrarMensaje("fala cara bom dia")
+		assert.equals(946, agenciaDeMensajeria.obtenerGananciaNetaDelMes())
+	}
+
+	test"empleado Del mes" {
+		agenciaDeMensajeria.registrarMensaje("hola mundo")
+		agenciaDeMensajeria.registrarMensaje("fala cara bom dia")
+		agenciaDeMensajeria.registrarMensaje("hola mundo bello")
+		assert.that(agenciaDeMensajeria.chasquiQuilla() == messich)
+	}
+
+}
+
+describe "test de pichca" {
+
+	test"debe poder enviar un mensaje con MAS de tres palabras" {
+		assert.that(pichca.puedeEnviarEseMensaje("bom dia espero que esteja bem"))
+	}
+
+	test"NO debe poder enviar un mensaje con MENOS de tres palabras" {
+		assert.notThat(pichca.puedeEnviarEseMensaje("hello world"))
+	}
+
+	test "Posibles costo de mensaje de Pichca " {
+		const posiblesCostos = [ 54, 72, 90, 108, 126 ]
+		assert.that(posiblesCostos.contains(pichca.costoMensaje("no me la container")))
+	}
+
+}
+
+describe "test para envios rapidos" {
+
+	test"NO debe poder enviar el mensaje" {
+		assert.notThat(enviosRapidos.puedeEnviarEseMensaje("se cayo wasap"))
+	}
+
+	test"debe poder enviar el mensaje" {
+		assert.that(enviosRapidos.puedeEnviarEseMensaje("se cayo sergio denis"))
+	}
+
+	test"Costo del mensaje por el mensajero enviosRapidos" {
+		assert.equals(80, enviosRapidos.costoMensaje("se cayo sergio denis"))
+	}
+
+}
+
+describe "test de EnviosEstandares" {
+
+	test"costo del mensaje por el mensajero envioEstandar" {
+		assert.equals(90, enviosEstandares.costoMensaje("hijo se me cayo el whatsapp"))
+	}
+
+}
+
+describe "test de EnviosVip" {
+
+	test"costo del mensaje por el mensajero envioVip" {
+		assert.equals(180, enviosVip.costoMensaje("hijo se me cayo el whatsapp"))
+	}
+
+}
+
