@@ -124,7 +124,9 @@ object biblioteca {
 
 	var property juegos = [ timbaElLeon, carlosDuty ]
 	var property puntos = 0
-	var juegosViolentos = juegos.filter({ unJuego => unJuego.esViolento() })
+	var property juegosViolentos = juegos.filter({ unJuego => unJuego.esViolento() })
+	const property cantJuegos = juegos.count({ unJuego => unJuego.esViolento() })
+	var property sumatoriaTiempoRestante = juegos.sum({ unJuego => unJuego.tiempoRestante() })
 
 	method adquirirJuego(unJuego) {
 		juegos.add(unJuego)
@@ -147,5 +149,54 @@ object biblioteca {
 		return (not juegos.contains(unJuego)) && unJuego.esViolento()
 	}
 
+	method unoConMasHorasRestantesQue(unasHoras) {
+		return juegos.find({ unJuego => unJuego.tiempoRestante() > unasHoras })
+	}
+
+	method muchaViolencia() {
+		return juegos.all({ juegoides => juegoides.esViolento() })
+	}
+
+	method todaviaHayParaRato() {
+		return juegos.any({ juegoides => juegoides.tiempoRestante() > 20 })
+	}
+
+	method tiemposViolentos() {
+		return juegosViolentos.map({ unJuego => unJuego.tiempoRestante() })
+	}
+
+	method promedioDeViolencia() {
+		return sumatoriaTiempoRestante / cantJuegos
+	}
+
+	method jugarATodo() {
+		juegos.forEach({ unJuego => unJuego.jugar(5)})
+	}
+
+}
+
+// practicas completas
+// matrix
+
+object laMatrix {
+	
+	method dejaEntrar(persona){
+		return persona.meAlcanza()
+	}
+}
+
+object neo{
+	
+	var credito = 7
+	
+	method meAlcanza(){
+		return credito > 5
+	}
+	
+	
+	method llamar(){
+		if (self.meAlcanza()) credito = credito - 5
+	} 
+	
 }
 
