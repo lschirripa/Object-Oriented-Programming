@@ -177,26 +177,52 @@ object biblioteca {
 
 // practicas completas
 // matrix
-
 object laMatrix {
-	
-	method dejaEntrar(persona){
+
+	method dejaEntrar(persona) {
 		return persona.meAlcanza()
 	}
+
 }
 
-object neo{
-	
+object puenteDeBrooklyn {
+
+	method dejaEntrar(persona) {
+		return (persona.peso()) <= 1000
+	}
+
+}
+
+object neo {
+
 	var credito = 7
-	
-	method meAlcanza(){
+	var property peso = 0
+
+	method meAlcanza() {
 		return credito > 5
 	}
-	
-	
-	method llamar(){
+
+	method llamar() {
 		if (self.meAlcanza()) credito = credito - 5
-	} 
-	
+	}
+
 }
 
+object paquete {
+
+	var property destino = laMatrix
+	var property pago = false
+
+	method pagar() {
+		pago = true
+	}
+
+	method estaPago() {
+		return pago
+}
+
+	method puedeSerEntregadoPor(persona) {
+		return self.estaPago() && destino.dejaEntrar(persona)
+}
+
+}
