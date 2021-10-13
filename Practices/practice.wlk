@@ -257,13 +257,3 @@ object prueba {
 	}
 
 }
-
-object camion {
-	var property peso = 500
-	
-}
-
-object bici {
-	var property peso = 1
-}
-
