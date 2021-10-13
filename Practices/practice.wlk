@@ -219,10 +219,51 @@ object paquete {
 
 	method estaPago() {
 		return pago
-}
+	}
 
 	method puedeSerEntregadoPor(persona) {
 		return self.estaPago() && destino.dejaEntrar(persona)
-}
+	}
 
 }
+
+object roberto {
+
+	var property peso = 90
+	var property credito = 0
+	
+		method meAlcanza() {
+		return credito > 5
+	}
+
+	method llamar() {
+		if (self.meAlcanza()) credito = credito - 5
+	}
+
+}
+
+object prueba {
+
+	method robertoTieneBici() {
+		roberto.peso(roberto.peso() + 1)
+	}
+
+	method robertoTieneCamionCon1Acoplado() {
+		roberto.peso(roberto.peso() + 500)
+	}
+
+	method unAcopladoMasParaElCamionDeRoberto() {
+		roberto.peso(roberto.peso() + 500)
+	}
+
+}
+
+object camion {
+	var property peso = 500
+	
+}
+
+object bici {
+	var property peso = 1
+}
+
