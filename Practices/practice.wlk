@@ -231,8 +231,8 @@ object roberto {
 
 	var property peso = 90
 	var property credito = 0
-	
-		method meAlcanza() {
+
+	method meAlcanza() {
 		return credito > 5
 	}
 
@@ -240,6 +240,19 @@ object roberto {
 		if (self.meAlcanza()) credito = credito - 5
 	}
 
+}
+
+object chuck{
+	var property peso = 900
+
+	method meAlcanza() {
+		return true 
+	}
+
+	method llamar() {
+		return true
+	}
+	
 }
 
 object prueba {
@@ -257,3 +270,39 @@ object prueba {
 	}
 
 }
+
+object mensajeria {
+
+	var empleados = []
+
+	method empleados() {
+		return empleados
+	}
+
+	method contratar(chuck) {
+		empleados.add(chuck)
+	}
+
+	method despedir(unEmpleado) {
+		empleados.remove(unEmpleado)
+	}
+
+	method despedirATodos() {
+		empleados = []
+	}
+	
+	method esGrande(){
+		return empleados.size() > 2
+	}
+	
+	
+	method loEntregaElPrimero(){
+		return paquete.puedeSerEntregadoPor(empleados.first())
+	}
+	
+	method pesoDelUltimo() {
+		return empleados.last().peso()
+	}
+
+}
+
