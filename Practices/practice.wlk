@@ -242,17 +242,18 @@ object roberto {
 
 }
 
-object chuck{
+object chuck {
+
 	var property peso = 900
 
 	method meAlcanza() {
-		return true 
+		return true
 	}
 
 	method llamar() {
 		return true
 	}
-	
+
 }
 
 object prueba {
@@ -290,18 +291,70 @@ object mensajeria {
 	method despedirATodos() {
 		empleados = []
 	}
-	
-	method esGrande(){
+
+	method esGrande() {
 		return empleados.size() > 2
 	}
-	
-	
-	method loEntregaElPrimero(){
+
+	method loEntregaElPrimero() {
 		return paquete.puedeSerEntregadoPor(empleados.first())
 	}
-	
+
 	method pesoDelUltimo() {
 		return empleados.last().peso()
+	}
+
+	method algunoPuedeEntregar(unPaquete) {
+		return empleados.any({ unEmpleado => unPaquete.puedeSerEntregadoPor(unEmpleado) })
+	}
+
+	method candidatosPara(unPaquete) {
+		return empleados.filter({ unEmpleado => unPaquete.puedeSerEntregadoPor(unEmpleado) })
+	}
+
+	method tieneSobrepeso() {
+		return ( empleados.map({ unEmpleado => unEmpleado.peso() }).sum() / empleados.size() ) > 500
+	}
+
+	method enviar(unPaquete) {
+	}
+
+}
+
+object paquetito {
+
+	var property destino = laMatrix
+	var property pago = false
+
+	method pagar() {
+		pago = true
+	}
+
+	method estaPago() {
+		return pago
+	}
+
+	method puedeSerEntregadoPor(persona) {
+		return self.estaPago() && destino.dejaEntrar(persona)
+	}
+
+}
+
+object paqueton {
+
+	var property destinos = []
+	var deuda = 0
+
+	method pagar(importe) {
+		deuda = deuda - importe
+	}
+
+	method estaPago() {
+		return deuda == 0
+	}
+
+	method puedeSerEntregadoPor(persona) {
+		return self.estaPago() && destino.dejaEntrar(persona)
 	}
 
 }
