@@ -96,7 +96,7 @@ object prueba {
 
 object mensajeria {
 
-	var empleados = []
+	var empleados = [neo,chuck]
 	var property paquetesPendientes = []
 
 	method empleados() {
@@ -140,9 +140,11 @@ object mensajeria {
 	}
 
 	method enviar(unPaquete) {
-		if  (self.candidatosPara(unPaquete) == []) paquetesPendientes.add(unPaquete) 
+		if (self.candidatosPara(unPaquete) == []) paquetesPendientes.add(unPaquete)
 	}
-
+	
+	
+	
 }
 
 object paquetito {
@@ -180,6 +182,5 @@ object paqueton {
 //	method puedeSerEntregadoPor(persona) {
 //		return self.estaPago() && destino.dejaEntrar(persona)
 //	}
-
 }
 
