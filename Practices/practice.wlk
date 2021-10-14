@@ -317,6 +317,7 @@ object mensajeria {
 	}
 
 	method enviar(unPaquete) {
+		return self.candidatosPara(unPaquete).anyOne()
 	}
 
 }
@@ -324,7 +325,7 @@ object mensajeria {
 object paquetito {
 
 	var property destino = laMatrix
-	var property pago = false
+	var property pago = true
 
 	method pagar() {
 		pago = true
@@ -353,9 +354,9 @@ object paqueton {
 		return deuda == 0
 	}
 
-	method puedeSerEntregadoPor(persona) {
-		return self.estaPago() && destino.dejaEntrar(persona)
-	}
+//	method puedeSerEntregadoPor(persona) {
+//		return self.estaPago() && destino.dejaEntrar(persona)
+//	}
 
 }
 
