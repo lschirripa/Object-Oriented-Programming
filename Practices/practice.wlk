@@ -275,7 +275,7 @@ object prueba {
 object mensajeria {
 
 	var empleados = []
-	var property mensajesPendientes = []
+	var property paquetesPendientes = []
 
 	method empleados() {
 		return empleados
@@ -318,7 +318,7 @@ object mensajeria {
 	}
 
 	method enviar(unPaquete) {
-		if  (self.candidatosPara(unPaquete) == []) 
+		if  (self.candidatosPara(unPaquete) == []) paquetesPendientes.add(unPaquete) 
 	}
 
 }
