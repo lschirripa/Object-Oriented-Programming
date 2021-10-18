@@ -1,4 +1,4 @@
-object bouba {
+class Zombi {
 
 	var salud = 100
 
@@ -22,39 +22,36 @@ object bouba {
 
 }
 
-object juliana {
+class Sobreviviente {
 
 	var property energia = 100
 
 	method danio() = energia * 10 / 100
 
-	method atacar(zombie) {
-		zombie.recibirDanio(self.danio())
+	method atacar(zombi) {
+		zombi.recibirDanio(self.danio())
 	}
 
 }
 
-object kiki {
+const bouba = new Zombi()
+const kiki = new Zombi()
+const juliana = new Sobreviviente(energia = 100)
+const anastasia  = new Sobreviviente(energia = 150)
 
-	var salud = 100
-
-	method salud(nuevaSalud) {
-		salud = nuevaSalud
+object invasion {
+	const property zombis = [new Zombi()]
+	
+	method tamanio() {
+		return zombis.count({zombi => zombi.vivo()})
 	}
-
-	method salud() {
-		return salud
+	
+	method incrementar(){
+		zombis.add(new Zombi())
 	}
-
-	method sabeCorrer() {
-		return false
-	}
-
-	method recibirDanio(danio) {
-		self.salud((salud - danio * 2).max(0))
-	}
-
-	method vivo() = salud > 0
-
 }
+
+
+
+
 
