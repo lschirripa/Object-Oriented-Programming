@@ -44,7 +44,7 @@ object centralEolica {
 object springfield {
 
 	var property necesidadEnergetica = 1000000
-	var centrales = [ centralEolica, centralCarbon, centralNuclear ]
+	const centrales = [ centralEolica, centralCarbon, centralNuclear ]
 
 	method centralesContaminantes() {
 		return centrales.filter({ unaCentral => unaCentral.esContaminante() })
@@ -56,8 +56,47 @@ object springfield {
 
 	method cubreNecesidad() {
 		return self.sumaEnergetica() > necesidadEnergetica
-}
+	}
+
+	method sumaEnergeticaDeContaminantes() {
+		return self.centralesContaminantes().map({ unaCentral => unaCentral.produccionEnergetica() }).sum()
+	}
+
+	method estaAlHorno() {
+		return (self.sumaEnergeticaDeContaminantes() > necesidadEnergetica / 2) || (centrales.all({ unaCentral => unaCentral.esContaminante() }))
+	}
 
 }
 
+object albuquerque {
+
+	const caudal = 150
+
+	method produccionEnergetica() {
+		return 2 * caudal
+	}
+
+	method sumaEnergetica() {
+		return self.produccionEnergetica()
+	}
+
+}
+
+object laRegion {
+
+	const ciudades = []
+
+	method agregarCiudad(ciudad) {
+		ciudades.add(ciudad)
+	}
+
+	method principalCiudadProductora() {
+		if (springfield.sumaEnergetica() > albuquerque.sumaEnergetica()) return springfield else return albuquerque
+	}
+	
+	method principalesCentrales(){
+		
+	}
+
+}
 
