@@ -93,10 +93,40 @@ object laRegion {
 	method principalCiudadProductora() {
 		if (springfield.sumaEnergetica() > albuquerque.sumaEnergetica()) return springfield else return albuquerque
 	}
-	
-	method principalesCentrales(){
-		
+
+	method principalesCentrales() {
 	}
 
 }
+
+object pepita {
+  var property energia = 50
+
+  method comerAlpiste(cantidad) {
+    if (cantidad <= 0) {
+      self.error("La cantidad de comida debe ser positiva")
+    }
+    energia += cantidad * 2
+  }
+
+  method volarEnCirculos() {
+    if (energia < 20) {
+      self.error("pepita no tiene suficiente energía para volar")      
+    }
+    energia -= 20
+  }
+
+}
+
+object carlos{
+	
+	method estudiarPepita(){
+		pepita.comerAlpiste(10)
+		pepita.volarEnCirculos()
+		pepita.volarEnCirculos()
+		pepita.comerAlpiste(10)		
+	}
+}
+
+
 
