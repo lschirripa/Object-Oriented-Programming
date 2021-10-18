@@ -31,6 +31,10 @@ class Sobreviviente {
 	method atacar(zombi) {
 		zombi.recibirDanio(self.danio())
 	}
+	method ataqueMasivo(){
+		invasion.zombis().map({unZombi => self.atacar(unZombi)})
+		energia =+ 50
+	}
 
 }
 
@@ -49,9 +53,6 @@ object invasion {
 	method incrementar(){
 		zombis.add(new Zombi())
 	}
+
 }
-
-
-
-
 
