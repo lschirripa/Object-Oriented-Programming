@@ -1,46 +1,51 @@
-class MaestroAgua {
+class Maestro {
 
 	var property habilidad
 
 	method esGroso() {
-		return habilidad > 5
+		return habilidad > 5 && self.poder() > 1000
 	}
+	
+	method poder()
 
-	method poder() {
+}
+
+class MaestroAgua inherits Maestro {
+
+	override method poder() {
 		return habilidad * 100
 	}
 
 }
 
-class MaestroFuego {
+class MaestroFuego inherits Maestro {
 
-	var property habilidad
 	var property rabia
 	var property locura
 
-	method esGroso() {
-		return habilidad > 5
-	}
-
-	method poder() {
-		return rabia/locura
+	override method poder() {
+		return rabia / locura
 	}
 
 }
 
-class Bisonte{
+class Bisonte {
+
 	var peso
+
 	method peso() = peso
-	
-	method comer(){
+
+	method comer() {
 		peso += 2
 	}
+
 }
 
-class BisonteVolador inherits Bisonte{
-	
-	method yipYip(){
+class BisonteVolador inherits Bisonte {
+
+	method yipYip() {
 		peso -= 1
 	}
+
 }
 
