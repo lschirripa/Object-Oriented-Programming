@@ -1,11 +1,11 @@
 class Maestro {
 
-	var property habilidad
+	var property habilidad = 100
 
 	method esGroso() {
 		return habilidad > 5 && self.poder() > 1000
 	}
-	
+
 	method poder()
 
 }
@@ -15,9 +15,9 @@ class MaestroAgua inherits Maestro {
 	override method poder() {
 		return habilidad * 100
 	}
-	
-	method esPeligroso(){
-		return self.poder()>3000
+
+	method esPeligroso() {
+		return self.poder() > 3000
 	}
 
 }
@@ -33,11 +33,33 @@ class MaestroFuego inherits Maestro {
 
 }
 
-class MaestroSangre inherits MaestroAgua{
-	
-	override method esPeligroso(){
+class MaestroSangre inherits MaestroAgua {
+
+	override method esPeligroso() {
 		return true
 	}
+
+	override method poder() {
+		return super() * 2
+	}
+
+}
+
+object aang inherits Maestro {
+	
+
+	override method poder() {
+		return 1
+	}
+
+}
+
+object appa{
+	
+}
+
+object momo{
+	
 }
 
 class Bisonte {
