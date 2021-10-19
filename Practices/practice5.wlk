@@ -1,6 +1,6 @@
 class Maestro {
 
-	var property habilidad = 100
+	var property habilidad
 
 	method esGroso() {
 		return habilidad > 5 && self.poder() > 1000
@@ -45,21 +45,39 @@ class MaestroSangre inherits MaestroAgua {
 
 }
 
-object aang inherits Maestro {
+object aang inherits Maestro(habilidad = 100) {
+	
+	const mascotas = []
+	
+	override method poder() {
+		return self.poderMascota() * self.habilidad()
+	}
+	
+	method poderMascota(){
+		 return mascotas.map({unaMascota => unaMascota.poder()}).sum()
+	}
+	
+	method mascota(nuevaMascota){
+		mascotas.add(nuevaMascota)
+	}
 	
 
-	override method poder() {
-		return 1
+}
+
+object appa {
+
+	method poder() {
+		return 150
 	}
 
 }
 
-object appa{
-	
-}
+object momo {
 
-object momo{
-	
+	method poder() {
+		return 15
+	}
+
 }
 
 class Bisonte {
