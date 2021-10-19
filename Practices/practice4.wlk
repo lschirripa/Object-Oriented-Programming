@@ -31,27 +31,31 @@ class Sobreviviente {
 	method atacar(zombi) {
 		zombi.recibirDanio(self.danio())
 	}
-	method ataqueMasivo(){
-		invasion.zombis().map({unZombi => self.atacar(unZombi)})
-		energia =+ 50
+
+	method ataqueMasivo(invasion) {
+     invasion.zombis().map({unZombie => unZombie.recibirDanio(self.danio())})
 	}
 
 }
 
 const bouba = new Zombi()
+
 const kiki = new Zombi()
+
 const juliana = new Sobreviviente(energia = 100)
-const anastasia  = new Sobreviviente(energia = 150)
+
+const anastasia = new Sobreviviente(energia = 150)
 
 object invasion {
-	const property zombis = [new Zombi()]
-	
+
+	const property zombis = [ new Zombi() ]
+
 	method tamanio() {
-		return zombis.count({zombi => zombi.vivo()})
+		return zombis.count({ zombi => zombi.vivo() })
 	}
-	
-	method incrementar(){
-		zombis.add(new Zombi())
+
+	method incrementar() {
+		self.tamanio().times{ foo => zombis.add(new Zombi())}
 	}
 
 }
