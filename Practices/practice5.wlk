@@ -15,6 +15,10 @@ class MaestroAgua inherits Maestro {
 	override method poder() {
 		return habilidad * 100
 	}
+	
+	method esPeligroso(){
+		return self.poder()>3000
+	}
 
 }
 
@@ -27,6 +31,13 @@ class MaestroFuego inherits Maestro {
 		return rabia / locura
 	}
 
+}
+
+class MaestroSangre inherits MaestroAgua{
+	
+	override method esPeligroso(){
+		return true
+	}
 }
 
 class Bisonte {
