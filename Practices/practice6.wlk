@@ -34,3 +34,33 @@ object olivia {
 
 }
 
+object adriano {
+
+	var property nivelDeContractura = 5
+	var property frescoParaProgramar = true
+
+	method recibirMasajes() {
+		nivelDeContractura = (nivelDeContractura - 2).max(0)
+	}
+
+	method darseUnBanioDeVapor() {
+		frescoParaProgramar = true
+	}
+
+	method comerBigMac() {
+		frescoParaProgramar = true
+	}
+
+	method codear() {
+		if (frescoParaProgramar) nivelDeContractura += 1 else (nivelDeContractura += 3)
+		frescoParaProgramar = false
+	}
+	
+	method trabajarUnDia(){
+		self.codear()
+		self.comerBigMac()
+		self.codear()
+	}
+
+}
+
