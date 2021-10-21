@@ -67,13 +67,30 @@ object adriano {
 class Producto {
 
 	var property descripcion
-	var property precioUnitario
-
 }
 
-const manzana = new Producto(descripcion = "verde", precioUnitario = 20)
-const banana = new Producto(descripcion = "amarilla", precioUnitario = 30)
-const milanga = new Producto(descripcion = "rica", precioUnitario = 50)
+class ProductoNormal inherits Producto{
+	var property precioUnitario
+}
+
+class ProductoPorPeso inherits Producto{
+	var property peso
+	var property pesoPorKilo
+	
+	method precioAAbonar() {
+		return pesoPorKilo*peso
+	}
+	
+	method precioUnitario(){
+		return self.precioAAbonar()
+	}
+}
+
+const manzana = new ProductoNormal(descripcion = "verde", precioUnitario = 20)
+const banana = new ProductoNormal(descripcion = "amarilla", precioUnitario = 30)
+const milanga = new ProductoNormal(descripcion = "rica", precioUnitario = 50)
+
+const berenjena = new ProductoPorPeso(descripcion = "fea", peso=10, pesoPorKilo=5)
 
 object carrito {
 
@@ -95,7 +112,7 @@ object carrito {
 		return productos.map({unProducto => unProducto.precioUnitario()}).sum()
 	}
 	
-	
-
 }
+
+
 
