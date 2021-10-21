@@ -55,12 +55,47 @@ object adriano {
 		if (frescoParaProgramar) nivelDeContractura += 1 else (nivelDeContractura += 3)
 		frescoParaProgramar = false
 	}
-	
-	method trabajarUnDia(){
+
+	method trabajarUnDia() {
 		self.codear()
 		self.comerBigMac()
 		self.codear()
 	}
+
+}
+
+class Producto {
+
+	var property descripcion
+	var property precioUnitario
+
+}
+
+const manzana = new Producto(descripcion = "verde", precioUnitario = 20)
+const banana = new Producto(descripcion = "amarilla", precioUnitario = 30)
+const milanga = new Producto(descripcion = "rica", precioUnitario = 50)
+
+object carrito {
+
+	const productos = []
+
+	method agregar(producto) {
+		productos.add(producto)
+	}
+	
+	method estaVacio(){
+		return productos == []
+	}
+	
+	method cantidadDeProductos(){
+		return productos.size()
+	}
+	
+	method totalAAbonar(){
+		return productos.map({unProducto => unProducto.precioUnitario()}).sum()
+	}
+	
+	
 
 }
 
