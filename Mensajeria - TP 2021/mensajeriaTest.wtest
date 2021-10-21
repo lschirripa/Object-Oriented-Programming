@@ -83,31 +83,27 @@ describe "test de mensajeria" {
 	}
 
 	test"para mandar mensaje se elige a EnviosEstandares" {
-		assert.equals(enviosEstandares, agenciaDeMensajeria.mensajeroElegido("ahhohkaskdkajsdkajsdklhlhha"))
+		assert.equals(elEstandar, agenciaDeMensajeria.mensajeroElegido("ahhohkaskdkajsdkajsdklhlhha"))
 	}
 
 	test"para mandar este mensaje NO se elije a enviosRapidos porque su competencia es mas barata" {
-		assert.notThat(agenciaDeMensajeria.mensajeroElegido("Enviame Esta") == enviosRapidos)
+		assert.notThat(agenciaDeMensajeria.mensajeroElegido("Enviame Esta") == elRapido)
 	}
 
 	test"para mandar este mensaje NO se elije a enviosVIP porque su competencia es mas barata" {
-		assert.notThat(agenciaDeMensajeria.mensajeroElegido("Enviame Esta tambien") == enviosVip)
-	}
-
-	test "Excepcion de mensaje vacio" {
-		assert.throwsExceptionWithMessage("El mensaje esta vacio", { agenciaDeMensajeria.recibirMensaje("")})
+		assert.notThat(agenciaDeMensajeria.mensajeroElegido("Enviame Esta tambien") == elVip)
 	}
 
 	test "Ganancia neta del mes" {
-		agenciaDeMensajeria.registrarMensaje("hola mundo")
-		agenciaDeMensajeria.registrarMensaje("fala cara bom dia")
-		assert.equals(946, agenciaDeMensajeria.obtenerGananciaNetaDelMes())
+		agenciaDeMensajeria.recibirMensaje("hola buen dia")
+		agenciaDeMensajeria.recibirMensaje("hola buen dia todo bien")
+		assert.equals(928, agenciaDeMensajeria.gananciaMensajeria())
 	}
 
 	test"empleado Del mes" {
-		agenciaDeMensajeria.registrarMensaje("hola mundo")
-		agenciaDeMensajeria.registrarMensaje("fala cara bom dia")
-		agenciaDeMensajeria.registrarMensaje("hola mundo bello")
+		agenciaDeMensajeria.recibirMensaje("hola mundo")
+		agenciaDeMensajeria.recibirMensaje("fala cara bom dia")
+		agenciaDeMensajeria.recibirMensaje("hola mundo bello")
 		assert.that(agenciaDeMensajeria.chasquiQuilla() == messich)
 	}
 
@@ -124,24 +120,28 @@ describe "test de pichca" {
 	}
 
 	test "Posibles costo de mensaje de Pichca " {
-		const posiblesCostos = [ 54, 72, 90, 108, 126 ]
-		assert.that(posiblesCostos.contains(pichca.costoMensaje("no me la container")))
+		pichca.valorBase(object {
+			method entreMinimoYMaximo(minimo, maximo) = 7
+		})
+		assert.equals(126, pichca.costoMensaje("no me la container"))
 	}
 
 }
 
+
+
 describe "test para envios rapidos" {
 
 	test"NO debe poder enviar el mensaje" {
-		assert.notThat(enviosRapidos.puedeEnviarEseMensaje("se cayo wasap"))
+		assert.notThat(elRapido.puedeEnviarEseMensaje("se cayo wasap"))
 	}
 
 	test"debe poder enviar el mensaje" {
-		assert.that(enviosRapidos.puedeEnviarEseMensaje("se cayo sergio denis"))
+		assert.that(elRapido.puedeEnviarEseMensaje("se cayo sergio denis"))
 	}
 
 	test"Costo del mensaje por el mensajero enviosRapidos" {
-		assert.equals(80, enviosRapidos.costoMensaje("se cayo sergio denis"))
+		assert.equals(80, elRapido.costoMensaje("se cayo sergio denis"))
 	}
 
 }
@@ -149,7 +149,7 @@ describe "test para envios rapidos" {
 describe "test de EnviosEstandares" {
 
 	test"costo del mensaje por el mensajero envioEstandar" {
-		assert.equals(90, enviosEstandares.costoMensaje("hijo se me cayo el whatsapp"))
+		assert.equals(90, elEstandar.costoMensaje("hijo se me cayo el whatsapp"))
 	}
 
 }
@@ -157,7 +157,7 @@ describe "test de EnviosEstandares" {
 describe "test de EnviosVip" {
 
 	test"costo del mensaje por el mensajero envioVip" {
-		assert.equals(180, enviosVip.costoMensaje("hijo se me cayo el whatsapp"))
+		assert.equals(180, elVip.costoMensaje("hijo se me cayo el whatsapp"))
 	}
 
 }
