@@ -1,0 +1,16 @@
+import wollok.game.*
+import messi.*
+import scalonetaInGame.*
+
+program juego {
+
+	game.title("la scaloneta")
+	game.height(10) 
+	game.width(10)
+	game.boardGround("boke.jpg")
+	
+	scalonetaInGame.configurar()
+	
+	game.start()
+
+}
