@@ -1,0 +1,9 @@
+import wollok.game.*
+
+program juego {
+
+	game.title("idk yet")
+	game.height(20) 
+	game.width(20)
+
+}
