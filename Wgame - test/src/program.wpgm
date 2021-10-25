@@ -1,9 +1,16 @@
 import wollok.game.*
+import example.*
 
 program juego {
 
 	game.title("idk yet")
-	game.height(20) 
-	game.width(20)
+	game.height(10) 
+	game.width(10)
+	game.boardGround("boke.jpg")
+	
+	game.addVisualCharacter(messi)
+	game.showAttributes(messi)
+	
+	game.start()
 
 }
