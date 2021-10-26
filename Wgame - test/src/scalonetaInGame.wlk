@@ -19,10 +19,10 @@ object scalonetaInGame {
 	}
 
 	method configurarAcciones() {
-		game.onTick(800, "cae", { china.perderAltura()})
-		game.onTick(800, "cae", { dePaul.perderAltura()})
-		game.onTick(800, "cae", { pelota.perderAltura()})
-		game.onTick(800, "cae", { trofeo.perderAltura()})
+		game.onTick(100.randomUpTo(800).roundUp(), "cae", { china.perderAltura()})
+		game.onTick(100.randomUpTo(800).roundUp(), "cae", { dePaul.perderAltura()})
+		game.onTick(100.randomUpTo(800).roundUp(), "cae", { pelota.perderAltura()})
+		game.onTick(100.randomUpTo(800).roundUp(), "cae", { trofeo.perderAltura()})
 	}
 
 }
