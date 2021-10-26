@@ -10,19 +10,19 @@ object scalonetaInGame {
 		game.addVisual(dePaul)
 		game.addVisual(pelota)
 		game.addVisual(trofeo)
-		game.showAttributes(china) // Debug
+		game.showAttributes(messi) // Debug
+		game.showAttributes(china)
 		game.showAttributes(dePaul)
 		game.showAttributes(pelota)
 		game.showAttributes(trofeo)
 		teclado.configurar()
-	// self.configurarAcciones()
 	}
 
 	method configurarAcciones() {
-		game.onTick(100.randomUpTo(800).roundUp(), "cae", { china.perderAltura()})
-		game.onTick(100.randomUpTo(800).roundUp(), "cae", { dePaul.perderAltura()})
-		game.onTick(100.randomUpTo(800).roundUp(), "cae", { pelota.perderAltura()})
-		game.onTick(100.randomUpTo(800).roundUp(), "cae", { trofeo.perderAltura()})
+		game.onTick(50.randomUpTo(800).roundUp(), "caeChina", { china.perderAltura()})
+		game.onTick(50.randomUpTo(800).roundUp(), "caeDePaul", { dePaul.perderAltura()})
+		game.onTick(50.randomUpTo(800).roundUp(), "caePelota", { pelota.perderAltura()})
+		game.onTick(50.randomUpTo(800).roundUp(), "caeTrofeo", { trofeo.perderAltura()})
 	}
 
 }
