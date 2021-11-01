@@ -8,7 +8,7 @@ object scalonetaInGame {
 		game.addVisual(messi)
 		game.addVisual(china)
 		game.addVisual(dePaul)
-		game.addVisual(pelota)
+		game.addVisual(kiko)
 		game.addVisual(trofeo)
 		game.addVisual(vida1)
 		game.addVisual(vida2)
@@ -16,7 +16,7 @@ object scalonetaInGame {
 		game.showAttributes(messi) // Debug
 		game.showAttributes(china)
 		game.showAttributes(dePaul)
-		game.showAttributes(pelota)
+		game.showAttributes(kiko)
 		game.showAttributes(trofeo)
 		teclado.configurar()
 	}
@@ -24,7 +24,7 @@ object scalonetaInGame {
 	method configurarAcciones() {
 		game.onTick(50.randomUpTo(800).roundUp(), "caeChina", { china.perderAltura()})
 		game.onTick(50.randomUpTo(800).roundUp(), "caeDePaul", { dePaul.perderAltura()})
-		game.onTick(50.randomUpTo(800).roundUp(), "caePelota", { pelota.perderAltura()})
+		game.onTick(50.randomUpTo(800).roundUp(), "caeKiko", { kiko.perderAltura()})
 		game.onTick(50.randomUpTo(800).roundUp(), "caeTrofeo", { trofeo.perderAltura()})
 	}
 

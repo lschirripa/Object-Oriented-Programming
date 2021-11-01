@@ -2,6 +2,10 @@ import wollok.game.*
 import scalonetaInGame.*
 import messi.*
 
+const MIN_VELOCIDAD = 50
+
+const MAX_VELOCIDAD = 150
+
 class Randoms {
 
 	var property position = game.origin()
@@ -31,16 +35,17 @@ class Randoms {
 
 }
 
-object pelota inherits Randoms(position = new Position(x = 1.randomUpTo(10).roundUp(), y = 9)) { // o game.at(1.randomUpTo(10).roundUp(), 5)))
+object kiko inherits Randoms(position = new Position(x = 1.randomUpTo(10).roundUp(), y = 9)) { // o game.at(1.randomUpTo(10).roundUp(), 5)))
 
-	override method image() = "pelota.png"
+	override method image() = "kiko.png"
 
 	override method asignarNuevaVelocidad() {
-		game.removeTickEvent("caePelota")
-		game.onTick(50.randomUpTo(800).roundUp(), "caePelota", { self.perderAltura()})
+		game.removeTickEvent("caeKiko")
+		game.onTick(MIN_VELOCIDAD.randomUpTo(MAX_VELOCIDAD).roundUp(), "caeKiko", { self.perderAltura()})
 	}
 
 	override method choqueAMessi() {
+		if (messi.meChocoAlguien(self)) game.sound("vamoniubel.mp3").play()
 	}
 
 }
@@ -51,7 +56,7 @@ object trofeo inherits Randoms(position = new Position(x = 1.randomUpTo(10).roun
 
 	override method asignarNuevaVelocidad() {
 		game.removeTickEvent("caeTrofeo")
-		game.onTick(50.randomUpTo(800).roundUp(), "caeTrofeo", { self.perderAltura()})
+		game.onTick(MIN_VELOCIDAD.randomUpTo(MAX_VELOCIDAD).roundUp(), "caeTrofeo", { self.perderAltura()})
 	}
 
 	override method choqueAMessi() {
@@ -65,11 +70,14 @@ object china inherits Randoms(position = new Position(x = 1.randomUpTo(10).round
 
 	override method asignarNuevaVelocidad() {
 		game.removeTickEvent("caeChina")
-		game.onTick(50.randomUpTo(800).roundUp(), "caeChina", { self.perderAltura()})
+		game.onTick(MIN_VELOCIDAD.randomUpTo(MAX_VELOCIDAD).roundUp(), "caeChina", { self.perderAltura()})
 	}
 
 	override method choqueAMessi() {
-		if (messi.meChocoAlguien(self)) messi.perderVidas(1)
+		if (messi.meChocoAlguien(self)) {
+			messi.perderVidas(1)
+			game.sound("chan.mp3").play()
+		}
 	}
 
 }
@@ -80,7 +88,7 @@ object dePaul inherits Randoms(position = new Position(x = 1.randomUpTo(10).roun
 
 	override method asignarNuevaVelocidad() {
 		game.removeTickEvent("caeDePaul")
-		game.onTick(50.randomUpTo(800).roundUp(), "caeDePaul", { self.perderAltura()})
+		game.onTick(MIN_VELOCIDAD.randomUpTo(MAX_VELOCIDAD).roundUp(), "caeDePaul", { self.perderAltura()})
 	}
 
 	override method choqueAMessi() {
