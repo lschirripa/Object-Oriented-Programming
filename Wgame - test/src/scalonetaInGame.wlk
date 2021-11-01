@@ -10,6 +10,9 @@ object scalonetaInGame {
 		game.addVisual(dePaul)
 		game.addVisual(pelota)
 		game.addVisual(trofeo)
+		game.addVisual(vida1)
+		game.addVisual(vida2)
+		game.addVisual(vida3)
 		game.showAttributes(messi) // Debug
 		game.showAttributes(china)
 		game.showAttributes(dePaul)
@@ -33,8 +36,8 @@ object teclado {
 		// keyboard.any().onPressDo{ juegoPepita.chequearEstadoJuego()}
 		keyboard.left().onPressDo{ messi.irA(messi.position().left(1))}
 		keyboard.right().onPressDo{ messi.irA(messi.position().right(1))}
-		keyboard.up().onPressDo{ messi.irA(messi.position().up(1))}
-		keyboard.down().onPressDo{ messi.irA(messi.position().down(1))}
+	//	keyboard.up().onPressDo{ messi.irA(messi.position().up(1))}
+	//	keyboard.down().onPressDo{ messi.irA(messi.position().down(1))}
 	// keyboard.c().onPressDo{ juegoPepita.atraparComida()}
 	}
 

@@ -88,12 +88,33 @@ object dePaul inherits Randoms(position = new Position(x = 1.randomUpTo(10).roun
 
 }
 
-object auxiliarRandom {
+class MessiChiquito {
 
-	const personajes = [ china, dePaul, trofeo, pelota ]
-	var property elegido = personajes.anyOne()
+	var property position = new Position(x = 0, y = 9)
 
-	method image() = elegido.image()
+	method image()
+
+	method vidasMessi(num) {
+		return messi.vidas() < num
+	}
+
+}
+
+object vida1 inherits MessiChiquito(position = game.at(0, 9)) {
+
+	override method image() = if (self.vidasMessi(1)) "messiCaido.png" else "messiChiquito.png"
+
+}
+
+object vida2 inherits MessiChiquito(position = game.at(1, 9)) {
+
+	override method image() = if (self.vidasMessi(2)) "messiCaido.png" else "messiChiquito.png"
+
+}
+
+object vida3 inherits MessiChiquito(position = game.at(2, 9)) {
+
+	override method image() = if (self.vidasMessi(3)) "messiCaido.png" else "messiChiquito.png"
 
 }
 
