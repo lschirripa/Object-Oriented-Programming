@@ -11,7 +11,10 @@ class Randoms {
 	method perderAltura() {
 		position = position.down(1)
 		self.corregirPosicion()
+		self.choqueAMessi()
 	}
+
+	method choqueAMessi()
 
 	method corregirPosicion() {
 		if (self.salioDelTablero()) {
@@ -37,6 +40,9 @@ object pelota inherits Randoms(position = new Position(x = 1.randomUpTo(10).roun
 		game.onTick(50.randomUpTo(800).roundUp(), "caePelota", { self.perderAltura()})
 	}
 
+	override method choqueAMessi() {
+	}
+
 }
 
 object trofeo inherits Randoms(position = new Position(x = 1.randomUpTo(10).roundUp(), y = 9)) {
@@ -46,6 +52,9 @@ object trofeo inherits Randoms(position = new Position(x = 1.randomUpTo(10).roun
 	override method asignarNuevaVelocidad() {
 		game.removeTickEvent("caeTrofeo")
 		game.onTick(50.randomUpTo(800).roundUp(), "caeTrofeo", { self.perderAltura()})
+	}
+
+	override method choqueAMessi() {
 	}
 
 }
@@ -59,6 +68,10 @@ object china inherits Randoms(position = new Position(x = 1.randomUpTo(10).round
 		game.onTick(50.randomUpTo(800).roundUp(), "caeChina", { self.perderAltura()})
 	}
 
+	override method choqueAMessi() {
+		if (messi.meChocoAlguien(self)) messi.perderVidas(1)
+	}
+
 }
 
 object dePaul inherits Randoms(position = new Position(x = 1.randomUpTo(10).roundUp(), y = 9)) {
@@ -68,6 +81,9 @@ object dePaul inherits Randoms(position = new Position(x = 1.randomUpTo(10).roun
 	override method asignarNuevaVelocidad() {
 		game.removeTickEvent("caeDePaul")
 		game.onTick(50.randomUpTo(800).roundUp(), "caeDePaul", { self.perderAltura()})
+	}
+
+	override method choqueAMessi() {
 	}
 
 }
