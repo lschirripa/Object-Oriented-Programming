@@ -18,10 +18,12 @@ object messi {
 	method perderVidas(cantidad) {
 		vidas -= cantidad
 	}
-
+	
+	
 	method meChocoAlguien(alguno) {
-		 return alguno.position() == self.position()
+		return alguno.position() == self.position()
 	}
 
 }
+
 

@@ -92,6 +92,7 @@ object dePaul inherits Randoms(position = new Position(x = 1.randomUpTo(10).roun
 	}
 
 	override method choqueAMessi() {
+		if (messi.meChocoAlguien(self)) score.sumarScore(100)
 	}
 
 }
