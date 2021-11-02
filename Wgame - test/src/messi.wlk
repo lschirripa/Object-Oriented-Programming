@@ -1,5 +1,6 @@
 import wollok.game.*
 import scalonetaInGame.*
+import objetosRandoms.*
 
 const t3st = 1
 
@@ -19,10 +20,16 @@ object messi {
 		vidas -= cantidad
 	}
 	
+	method recuperarVidas(cantidad) {
+		if(self.vidas() < 3)
+		vidas = (vidas + cantidad).min(3)
+	}
+	
 	
 	method meChocoAlguien(alguno) {
 		return alguno.position() == self.position()
 	}
+	
 
 }
 

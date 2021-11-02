@@ -45,7 +45,10 @@ object kiko inherits Randoms(position = new Position(x = 1.randomUpTo(10).roundU
 	}
 
 	override method choqueAMessi() {
-		if (messi.meChocoAlguien(self)) game.sound("vamoniubel.mp3").play()
+		if (messi.meChocoAlguien(self)) {
+			game.sound("vamoniubel.mp3").play()
+			messi.recuperarVidas(3)
+			}
 	}
 
 }

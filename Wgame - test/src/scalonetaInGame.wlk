@@ -53,7 +53,7 @@ object score {
 	method text() = "score"
 
 	method sumarScore(cantidad) {
-		score += cantidad
+		score += cantidad.max(3)
 	}
 
 }
