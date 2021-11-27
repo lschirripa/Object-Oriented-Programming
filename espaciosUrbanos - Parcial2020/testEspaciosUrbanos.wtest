@@ -1,0 +1,101 @@
+import espaciosUrbanos.*
+
+describe "test de espaciosUrbanos" {
+
+	test "dado un multiEspacio, con plaza y plazoleta Grande, entonces es GRANDE" {
+
+		const plaza = new Plaza(superficieTotal = 100, vallado = true, valuacion = 200, canchas = 3)
+		const plazoleta = new Plazoleta(superficieTotal = 100, vallado = true, valuacion = 400, procer = "San Martin", cierraConLlave = true)
+		
+		const multiEspacio = new MultiEspacio(superficieTotal = 100, vallado = true,valuacion = 300, multiEspacios = [plaza, plazoleta])
+		
+		assert.that(multiEspacio.esGrande())
+	}
+	
+	test "dado un multiEspacio, con plaza NO grande y plazoleta Grande, entonces NO es grande" {
+
+		const plaza = new Plaza(superficieTotal = 100, vallado = true, valuacion = 200, canchas = 1)
+		const plazoleta = new Plazoleta(superficieTotal = 100, vallado = true, valuacion = 400, procer = "San Martin", cierraConLlave = true)
+		
+		const multiEspacio = new MultiEspacio(superficieTotal = 100, vallado = true,valuacion = 300, multiEspacios = [plaza, plazoleta])
+		
+		assert.notThat(multiEspacio.esGrande())
+	}
+	
+	test "Dada una Plaza, con superficie ampla, con vallado, y bien valuada con pocas canchas, entonces NO es grande" {
+
+		const plaza = new Plaza(superficieTotal = 100, vallado = true, valuacion = 200, canchas = 1)
+		
+		assert.notThat(plaza.esGrande())
+	}
+	
+	test "Dada una Plaza, con superficie ampla, con vallado, y bien valuada con muchas canchas, entonces es grande" {
+
+		const plaza = new Plaza(superficieTotal = 100, vallado = true, valuacion = 200, canchas = 3)
+		
+		assert.that(plaza.esGrande())
+	}
+	
+	test "dada una Plazoleta con superficie ampla, con vallado, y bien valuada, con procer San Martin y que se cierra con llave, entonce es GRANDE" {
+
+		const plazoleta = new Plazoleta(superficieTotal = 100, vallado = true, valuacion = 400, procer = "San Martin", cierraConLlave = true)
+		
+		assert.that(plazoleta.esGrande())
+	}
+	
+	test "dada una Plazoleta con superficie ampla, con vallado, y bien valuada, con procer Sarmiento y que se cierra con llave, entonce NO es grande" {
+
+		const plazoleta = new Plazoleta(superficieTotal = 100, vallado = true, valuacion = 400, procer = "Sarmiento", cierraConLlave = true)
+		
+		assert.notThat(plazoleta.esGrande())
+	}
+	
+	test "dado un anfiteatro con superficie ampla, con vallado, bien valuada y con mucha capacidad, entonces es GRANDE" {
+
+		const anfiteatro = new Anfiteatro(superficieTotal = 100, vallado = true, valuacion = 400, capacidad = 600 )
+		
+		assert.that(anfiteatro.esGrande())
+	}
+	
+	test "dado un anfiteatro con superficie ampla, con vallado, bien valuada y con poca capacidad, entonces NO es grande" {
+
+		const anfiteatro = new Anfiteatro(superficieTotal = 100, vallado = true, valuacion = 400, capacidad = 400 )
+		
+		assert.notThat(anfiteatro.esGrande())
+	}
+
+}
+
+describe "test Trabajadores"{
+	
+	test"dada un trabajador puede realizar el trabajo en un Espacio Urbano"{
+		const tito = new Trabajador()
+		const plaza = new Plaza(superficieTotal = 100, vallado = false, valuacion = 200, canchas = 3)
+		
+		assert.that(tito.profesion().trabajaEnEspacio(plaza))
+	}
+	
+	test"dada un trabajador NO puede realizar el trabajo en un Espacio Urbano"{
+		const tito = new Trabajador()
+		const plaza = new Plaza(superficieTotal = 100, vallado = true, valuacion = 200, canchas = 3)
+		
+		assert.notThat(tito.profesion().trabajaEnEspacio(plaza))
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
