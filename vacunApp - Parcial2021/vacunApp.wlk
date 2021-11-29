@@ -19,9 +19,17 @@ class Persona {
 
 class Vacuna {
 
+	var property costoInicialVacuna = 1000
+
 	method otorgarAnticuerpos(persona)
-	
+
 	method otorgarInmunidad(persona)
+
+	method costoExtraDeVacuna()
+
+	method calcularCostoAdicionalPorEdad(persona) = ((persona.edad() - 30) * 50).max(0)
+
+	method costoTotalVacuna(persona) = costoInicialVacuna + self.calcularCostoAdicionalPorEdad(persona) + self.costoExtraDeVacuna()
 
 }
 
@@ -31,7 +39,7 @@ class Paifer inherits Vacuna {
 		persona.aumentarAnticuerpos(persona.anticuerpos() * 10)
 	}
 
-	method otorgarInmunidad(persona) {
+	override method otorgarInmunidad(persona) {
 		if (self.personaMayor(persona)) persona.aumentarInmunidad(persona.inmunidad().plusMonths(6)) else persona.aumentarInmunidad(persona.inmunidad().plusMonths(9))
 	}
 
@@ -39,7 +47,7 @@ class Paifer inherits Vacuna {
 
 }
 
-class Larussa inherits Vacuna{
+class Larussa inherits Vacuna {
 
 	var property multiplicador
 
@@ -47,19 +55,19 @@ class Larussa inherits Vacuna{
 		persona.aumentarAnticuerpos(persona.anticuerpos() * multiplicador.min(20))
 	}
 
-	method otorgarInmunidad(persona) {
+	override method otorgarInmunidad(persona) {
 		persona.aumentarInmunidad(new Date(day = 3, month = 3, year = 2022))
 	}
 
 }
 
-class AstraLaVistaZeneca inherits Vacuna{
+class AstraLaVistaZeneca inherits Vacuna {
 
-	method otorgarAnticuerpos(persona) {
+	override method otorgarAnticuerpos(persona) {
 		persona.aumentarAnticuerpos(10000)
 	}
 
-	method otorgarInmunidad(persona) {
+	override method otorgarInmunidad(persona) {
 		if (self.tieneNombrePar(persona)) persona.aumentarInmunidad(persona.inmunidad().plusMonths(6)) else persona.aumentarInmunidad(persona.inmunidad().plusMonths(7))
 	}
 
@@ -67,21 +75,21 @@ class AstraLaVistaZeneca inherits Vacuna{
 
 }
 
-class Combineta inherits Vacuna{
+class Combineta inherits Vacuna {
 
 	const property dosisCombinadas = []
-	
-	method otorgarAnticuerpos(persona){
+
+	override method otorgarAnticuerpos(persona) {
 		self.listarAnticuerposDeDosisCombinadas().min()
 	}
-	
-	method otorgarInmunidad(persona){
+
+	override method otorgarInmunidad(persona) {
 		self.listarAnticuerposDeDosisCombinadas().max()
 	}
-	
-	method listarAnticuerposDeDosisCombinadas() = dosisCombinadas.map({dosis=>dosis.anticuerpos()})
-	
-	method listarInmunidadDeDosisCombinadas() = dosisCombinadas.map({dosis=>dosis.inmunidad()})
+
+	method listarAnticuerposDeDosisCombinadas() = dosisCombinadas.map({ dosis => dosis.anticuerpos() })
+
+	method listarInmunidadDeDosisCombinadas() = dosisCombinadas.map({ dosis => dosis.inmunidad() })
 
 }
 
