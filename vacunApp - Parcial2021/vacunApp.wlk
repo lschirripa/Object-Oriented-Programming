@@ -7,6 +7,7 @@ class Persona {
 	var property anticuerpos = 10
 	var property inmunidad = new Date()
 	var property criterioDeVacunacion
+	var property vacunasQueAcepta = []
 
 	method aumentarAnticuerpos(vacuna) {
 		anticuerpos += vacuna.otorgarAnticuerpos(self)
@@ -18,15 +19,17 @@ class Persona {
 
 	method esEspecial() = ciudadesEspeciales.contains(ciudad.toLowerCase())
 
+// tambien pude haber hecho esEspecial(persona) = ciudad == "tierra del fuego" || "neuquen" || "santa cruz",
+// pero por alguna razon me parecio mas linda y sostenible a largo plazo la opcion de una lista
 	method aplicarseVacuna(vacuna) {
 		self.aumentarAnticuerpos(vacuna)
 		self.aumentarInmunidad(vacuna)
 	}
-	
-	method aceptaVacuna(vacuna) = criterioDeVacunacion.eligeVacuna(self,vacuna)
 
-// tambien pude haber hecho esEspecial(persona) = ciudad == "tierra del fuego" || "neuquen" || "santa cruz",
-// pero por alguna razon me parecio mas linda y sostenible a largo plazo la opcion de una lista
+	method aceptaVacuna(vacuna) = criterioDeVacunacion.eligeVacuna(self, vacuna)
+
+	method vacunasQueAcepta() = vacunasDisponibles.filter({ vacuna => self.aceptaVacuna(vacuna) })
+
 }
 
 class Vacuna {
@@ -101,45 +104,55 @@ class Combineta inherits Vacuna {
 
 object cualquierosa {
 
-	method eligeVacuna(persona,vacuna) = true
+	method eligeVacuna(persona, vacuna) = true
 
 }
 
 object anticuerposa {
 
-	method eligeVacuna(persona,vacuna) = vacuna.otorgarAnticuerpos(persona) > 100000
+	method eligeVacuna(persona, vacuna) = vacuna.otorgarAnticuerpos(persona) > 100000
 
 }
 
 object inmunidosaFija {
-	
+
 	const fechaMinimaDeInmunidad = new Date(day = 5, month = 3, year = 2022)
 
-	method eligeVacuna(persona,vacuna) = vacuna.otorgarInmunidad(persona) >= fechaMinimaDeInmunidad
+	method eligeVacuna(persona, vacuna) = vacuna.otorgarInmunidad(persona) >= fechaMinimaDeInmunidad
 
 }
 
 class InmunidosaVariable {
-	
+
 	var property mesesMinimosDeInmunidad
-	
+
 	method fechaMinimaDeInmunidad() = new Date().plusMonths(mesesMinimosDeInmunidad)
 
-	method eligeVacuna(persona,vacuna) = vacuna.otorgarInmunidad(persona) >= self.fechaMinimaDeInmunidad()
+	method eligeVacuna(persona, vacuna) = vacuna.otorgarInmunidad(persona) >= self.fechaMinimaDeInmunidad()
 
 }
 
+object vacunatorioVip {
+
+}
+
+const vacunasDisponibles = [ paifer, larussa2, larussa5, astraLaVistaZeneca, combineta ]
 
 const paifer = new Paifer()
 
 const larussa2 = new Larussa(multiplicador = 2)
 
+const larussa5 = new Larussa(multiplicador = 5)
+
+const astraLaVistaZeneca = new AstraLaVistaZeneca()
+
 const combineta = new Combineta(dosisCombinadas = [ paifer, larussa2 ])
 
 const inmunidosaVariable2 = new InmunidosaVariable(mesesMinimosDeInmunidad = 2)
 
-object inmunidosaVariable30 inherits InmunidosaVariable(mesesMinimosDeInmunidad=30){
+object inmunidosaVariable30 inherits InmunidosaVariable(mesesMinimosDeInmunidad = 30) {
+
 }
 
-const tito = new Persona(edad = 90, nombre = "tito", ciudad = "TIERRA del FUEgo", criterioDeVacunacion = cualquierosa)
+const ginesGarcia = new Persona(edad = 90, nombre = "ladri", ciudad = "TIERRA del FUEgo", criterioDeVacunacion = cualquierosa)
 
