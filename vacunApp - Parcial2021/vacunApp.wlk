@@ -4,7 +4,7 @@ class Persona {
 	var property nombre
 	var property ciudad
 	const property ciudadesEspeciales = [ "tierra del fuego", "santa cruz", "neuquen" ]
-	var property anticuerpos = 0
+	var property anticuerpos = 10
 	var property inmunidad = new Date()
 
 	method aumentarAnticuerpos(vacuna) {
@@ -16,8 +16,8 @@ class Persona {
 	}
 
 	method esEspecial() = ciudadesEspeciales.contains(ciudad.toLowerCase())
-	
-	method aplicarseVacuna(vacuna){
+
+	method aplicarseVacuna(vacuna) {
 		self.aumentarAnticuerpos(vacuna)
 		self.aumentarInmunidad(vacuna)
 	}
@@ -48,9 +48,7 @@ class Paifer inherits Vacuna {
 
 	override method otorgarAnticuerpos(persona) = persona.anticuerpos() * 10
 
-
 	override method otorgarInmunidad(persona) = if (self.personaMayorDeEdad(persona, 40)) persona.inmunidad().plusMonths(6) else persona.inmunidad().plusMonths(9)
-	
 
 	override method costoExtraDeVacuna(persona) = if (self.personaMayorDeEdad(persona, 18)) 400 else 100
 
@@ -60,11 +58,9 @@ class Larussa inherits Vacuna {
 
 	var property multiplicador
 
-	override method otorgarAnticuerpos(persona) = persona.anticuerpos() * multiplicador.min(20)
-
+	override method otorgarAnticuerpos(persona) = persona.anticuerpos() * (multiplicador.min(20))
 
 	override method otorgarInmunidad(persona) = new Date(day = 3, month = 3, year = 2022)
-	
 
 	override method costoExtraDeVacuna(persona) = 100 * multiplicador
 
@@ -75,10 +71,8 @@ class AstraLaVistaZeneca inherits Vacuna {
 	method tieneNombrePar(persona) = persona.nombre().length().even()
 
 	override method otorgarAnticuerpos(persona) = 10000
-	
 
 	override method otorgarInmunidad(persona) = if (self.tieneNombrePar(persona)) persona.inmunidad().plusMonths(6) else persona.inmunidad().plusMonths(7)
-	
 
 	override method costoExtraDeVacuna(persona) = if (persona.esEspecial()) 2000 else 0
 
@@ -88,18 +82,25 @@ class Combineta inherits Vacuna {
 
 	const property dosisCombinadas = []
 
-	override method otorgarAnticuerpos(persona) = self.listarAnticuerposDeDosisCombinadas().min()
-	
+	method listarAnticuerposDeDosisCombinadas(persona) = dosisCombinadas.map({ dosis => dosis.otorgarAnticuerpos(persona) })
 
-	override method otorgarInmunidad(persona) = self.listarInmunidadDeDosisCombinadas().max()
-	
+	method listarInmunidadDeDosisCombinadas(persona) = dosisCombinadas.map({ dosis => dosis.otorgarInmunidad(persona) })
 
-	method listarAnticuerposDeDosisCombinadas() = dosisCombinadas.map({ dosis => dosis.otorgarAnticuerpos() })
+	method listarCostoExtraDeCadaVacuna(persona) = dosisCombinadas.map({ dosis => dosis.costoExtraDeVacuna(persona) })
 
-	method listarInmunidadDeDosisCombinadas() = dosisCombinadas.map({ dosis => dosis.otorgarInmunidad() })
+	override method otorgarAnticuerpos(persona) = self.listarAnticuerposDeDosisCombinadas(persona).min()
 
-	method listarCostoExtraDeCadaVacuna() = dosisCombinadas.map({ dosis => dosis.costoExtraDeVacuna() })
+	override method otorgarInmunidad(persona) = self.listarInmunidadDeDosisCombinadas(persona).max()
 
+	override method costoExtraDeVacuna(persona) = self.listarCostoExtraDeCadaVacuna(persona).sum()
 
 }
+
+const paifer = new Paifer()
+
+const larussa2 = new Larussa(multiplicador=2)
+
+const combineta = new Combineta(dosisCombinadas=[paifer,larussa2])
+
+const tito = new Persona(edad = 90, nombre = "tito", ciudad = "TIERRA del FUEgo")
 
