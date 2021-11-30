@@ -2,6 +2,9 @@ class UserException inherits Exception {
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////           PERSONAS             //////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Persona {
 
 	var property edad
@@ -25,7 +28,9 @@ class Persona {
 // tambien pude haber hecho esEspecial(persona) = ciudad == "tierra del fuego" || "neuquen" || "santa cruz",
 // pero por alguna razon me parecio mas linda y sostenible a largo plazo la opcion de una lista
 	method aplicarseVacuna(vacuna) {
-		if (!self.aceptaVacuna(vacuna)) { throw new UserException(message = "la persona no acepta esta vacuna, intente con otra") }
+		if (!self.aceptaVacuna(vacuna)) {
+			throw new UserException(message = "la persona no acepta esta vacuna, intente con otra")
+		}
 		self.aumentarAnticuerpos(vacuna)
 		self.aumentarInmunidad(vacuna)
 	}
@@ -44,6 +49,19 @@ class Persona {
 
 }
 
+const ginesGarcia = new Persona(edad = 60, nombre = "ladri1", ciudad = "TIERRA del FUEgo", criterioDeVacunacion = cualquierosa)
+
+const hijoDeGinesGarcia = new Persona(edad = 30, nombre = "ladri2", ciudad = "la PamPA", criterioDeVacunacion = anticuerposa)
+
+const nietoDeGinesGarcia = new Persona(edad = 7, nombre = "ladri3", ciudad = "Santiago del Estero", criterioDeVacunacion = inmunidosaVariable7)
+
+const mamaDeGinesGarcia = new Persona(edad = 90, nombre = "ladri4", ciudad = "bueNOS AIRES", criterioDeVacunacion = inmunidosaFija)
+
+const papaDeGinesGarcia = new Persona(edad = 80, nombre = "ladri5", ciudad = "NEUQUEN", criterioDeVacunacion = inmunidosaVariable2)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////           VACUNAS             ///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Vacuna {
 
 	var property costoInicialVacuna = 1000
@@ -121,6 +139,19 @@ class Combineta inherits Vacuna {
 
 }
 
+const paifer = new Paifer()
+
+const larussa2 = new Larussa(multiplicador = 2)
+
+const larussa5 = new Larussa(multiplicador = 5)
+
+const astraLaVistaZeneca = new AstraLaVistaZeneca()
+
+const combineta = new Combineta(dosisCombinadas = [ paifer, larussa2 ])
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////           CRITERIOS             /////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 object cualquierosa {
 
 	method eligeVacuna(persona, vacuna) = true
@@ -151,6 +182,15 @@ class InmunidosaVariable {
 
 }
 
+const inmunidosaVariable2 = new InmunidosaVariable(mesesMinimosDeInmunidad = 2)
+
+object inmunidosaVariable7 inherits InmunidosaVariable(mesesMinimosDeInmunidad = 7) {
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////           VACUNATORIO VIP             ///////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 object vacunatorioVip {
 
 	method personasCuerdas() = personasAVacunar.filter({ persona => !persona.esTremendoAntivacuna() })
@@ -162,30 +202,4 @@ object vacunatorioVip {
 const vacunasDisponibles = [ paifer, larussa2, larussa5, astraLaVistaZeneca, combineta ]
 
 const personasAVacunar = [ ginesGarcia, hijoDeGinesGarcia, nietoDeGinesGarcia, mamaDeGinesGarcia, papaDeGinesGarcia ]
-
-const paifer = new Paifer()
-
-const larussa2 = new Larussa(multiplicador = 2)
-
-const larussa5 = new Larussa(multiplicador = 5)
-
-const astraLaVistaZeneca = new AstraLaVistaZeneca()
-
-const combineta = new Combineta(dosisCombinadas = [ paifer, larussa2 ])
-
-const inmunidosaVariable2 = new InmunidosaVariable(mesesMinimosDeInmunidad = 2)
-
-object inmunidosaVariable7 inherits InmunidosaVariable(mesesMinimosDeInmunidad = 7) {
-
-}
-
-const ginesGarcia = new Persona(edad = 60, nombre = "ladri1", ciudad = "TIERRA del FUEgo", criterioDeVacunacion = cualquierosa)
-
-const hijoDeGinesGarcia = new Persona(edad = 30, nombre = "ladri2", ciudad = "la PamPA", criterioDeVacunacion = anticuerposa)
-
-const nietoDeGinesGarcia = new Persona(edad = 7, nombre = "ladri3", ciudad = "Santiago del Estero", criterioDeVacunacion = inmunidosaVariable7)
-
-const mamaDeGinesGarcia = new Persona(edad = 90, nombre = "ladri4", ciudad = "bueNOS AIRES", criterioDeVacunacion = inmunidosaFija)
-
-const papaDeGinesGarcia = new Persona(edad = 80, nombre = "ladri5", ciudad = "NEUQUEN", criterioDeVacunacion = inmunidosaVariable2)
 
