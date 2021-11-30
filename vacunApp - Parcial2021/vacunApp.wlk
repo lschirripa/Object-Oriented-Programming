@@ -1,3 +1,7 @@
+class UserException inherits Exception {
+
+}
+
 class Persona {
 
 	var property edad
@@ -7,7 +11,6 @@ class Persona {
 	var property anticuerpos = 10
 	var property inmunidad = new Date()
 	var property criterioDeVacunacion
-	var property vacunasQueAcepta = []
 
 	method aumentarAnticuerpos(vacuna) {
 		anticuerpos += vacuna.otorgarAnticuerpos(self)
@@ -29,6 +32,14 @@ class Persona {
 	method aceptaVacuna(vacuna) = criterioDeVacunacion.eligeVacuna(self, vacuna)
 
 	method vacunasQueAcepta() = vacunasDisponibles.filter({ vacuna => self.aceptaVacuna(vacuna) })
+
+	method esTremendoAntivacuna() = self.vacunasQueAcepta() == []
+
+	method vacunaMasBarataPosible() = self.vacunasQueAcepta().min({ vacuna => vacuna.costoTotalVacuna(self) })
+
+	method costosDeLasVacunasQueAcepta() = self.vacunasQueAcepta().map({ vacuna => vacuna.costoTotalVacuna(self) })
+
+	method costoDeLaVacunaMasBarataPosible() = self.costosDeLasVacunasQueAcepta().min()
 
 }
 
@@ -134,9 +145,16 @@ class InmunidosaVariable {
 
 object vacunatorioVip {
 
+
+	method personasCuerdas() = personasAVacunar.filter({ persona => !persona.esTremendoAntivacuna() })
+
+	method costoDelPlanInicialDeVacunacion() = self.personasCuerdas().map({persona => persona.costoDeLaVacunaMasBarataPosible()}).sum()
+
 }
 
 const vacunasDisponibles = [ paifer, larussa2, larussa5, astraLaVistaZeneca, combineta ]
+
+const personasAVacunar = [ ginesGarcia, hijoDeGinesGarcia, nietoDeGinesGarcia, mamaDeGinesGarcia, papaDeGinesGarcia ]
 
 const paifer = new Paifer()
 
@@ -150,9 +168,17 @@ const combineta = new Combineta(dosisCombinadas = [ paifer, larussa2 ])
 
 const inmunidosaVariable2 = new InmunidosaVariable(mesesMinimosDeInmunidad = 2)
 
-object inmunidosaVariable30 inherits InmunidosaVariable(mesesMinimosDeInmunidad = 30) {
+object inmunidosaVariable7 inherits InmunidosaVariable(mesesMinimosDeInmunidad = 7) {
 
 }
 
-const ginesGarcia = new Persona(edad = 90, nombre = "ladri", ciudad = "TIERRA del FUEgo", criterioDeVacunacion = cualquierosa)
+const ginesGarcia = new Persona(edad = 60, nombre = "ladri1", ciudad = "TIERRA del FUEgo", criterioDeVacunacion = cualquierosa)
+
+const hijoDeGinesGarcia = new Persona(edad = 30, nombre = "ladri2", ciudad = "la PamPA", criterioDeVacunacion = anticuerposa)
+
+const nietoDeGinesGarcia = new Persona(edad = 7, nombre = "ladri3", ciudad = "Santiago del Estero", criterioDeVacunacion = inmunidosaVariable7)
+
+const mamaDeGinesGarcia = new Persona(edad = 90, nombre = "ladri4", ciudad = "bueNOS AIRES", criterioDeVacunacion = inmunidosaFija)
+
+const papaDeGinesGarcia = new Persona(edad = 80, nombre = "ladri5", ciudad = "NEUQUEN", criterioDeVacunacion = inmunidosaVariable2)
 
