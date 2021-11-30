@@ -25,6 +25,7 @@ class Persona {
 // tambien pude haber hecho esEspecial(persona) = ciudad == "tierra del fuego" || "neuquen" || "santa cruz",
 // pero por alguna razon me parecio mas linda y sostenible a largo plazo la opcion de una lista
 	method aplicarseVacuna(vacuna) {
+		if (!self.aceptaVacuna(vacuna)) { throw new UserException(message = "la persona no acepta esta vacuna, intente con otra") }
 		self.aumentarAnticuerpos(vacuna)
 		self.aumentarInmunidad(vacuna)
 	}
@@ -57,6 +58,8 @@ class Vacuna {
 
 	method costoTotalVacuna(persona) = costoInicialVacuna + self.calcularCostoAdicionalPorEdad(persona) + self.costoExtraDeVacuna(persona)
 
+	method agregarMesesDeInmunidad(persona, valor) = persona.inmunidad().plusMonths(valor)
+
 }
 
 class Paifer inherits Vacuna {
@@ -65,7 +68,7 @@ class Paifer inherits Vacuna {
 
 	override method otorgarAnticuerpos(persona) = persona.anticuerpos() * 10
 
-	override method otorgarInmunidad(persona) = if (self.personaMayorDeEdad(persona, 40)) persona.inmunidad().plusMonths(6) else persona.inmunidad().plusMonths(9)
+	override method otorgarInmunidad(persona) = if (self.personaMayorDeEdad(persona, 40)) self.agregarMesesDeInmunidad(persona, 6) else self.agregarMesesDeInmunidad(persona, 6)
 
 	override method costoExtraDeVacuna(persona) = if (self.personaMayorDeEdad(persona, 18)) 400 else 100
 
@@ -75,7 +78,12 @@ class Larussa inherits Vacuna {
 
 	var property multiplicador
 
-	override method otorgarAnticuerpos(persona) = persona.anticuerpos() * (multiplicador.min(20))
+	override method otorgarAnticuerpos(persona) {
+		if (multiplicador > 20) {
+			throw new UserException(message = "el multiplicador debe ser menor o igual a 20, modifiquelo e intente nuevamente")
+		}
+		return persona.anticuerpos() * multiplicador
+	}
 
 	override method otorgarInmunidad(persona) = new Date(day = 3, month = 3, year = 2022)
 
@@ -89,7 +97,7 @@ class AstraLaVistaZeneca inherits Vacuna {
 
 	override method otorgarAnticuerpos(persona) = 10000
 
-	override method otorgarInmunidad(persona) = if (self.tieneNombrePar(persona)) persona.inmunidad().plusMonths(6) else persona.inmunidad().plusMonths(7)
+	override method otorgarInmunidad(persona) = if (self.tieneNombrePar(persona)) self.agregarMesesDeInmunidad(persona, 6) else self.agregarMesesDeInmunidad(persona, 7)
 
 	override method costoExtraDeVacuna(persona) = if (persona.esEspecial()) 2000 else 0
 
@@ -145,10 +153,9 @@ class InmunidosaVariable {
 
 object vacunatorioVip {
 
-
 	method personasCuerdas() = personasAVacunar.filter({ persona => !persona.esTremendoAntivacuna() })
 
-	method costoDelPlanInicialDeVacunacion() = self.personasCuerdas().map({persona => persona.costoDeLaVacunaMasBarataPosible()}).sum()
+	method costoDelPlanInicialDeVacunacion() = self.personasCuerdas().map({ persona => persona.costoDeLaVacunaMasBarataPosible() }).sum()
 
 }
 
