@@ -10,10 +10,10 @@ class Persona {
 	var property edad
 	var property nombre
 	var property ciudad
-	const property ciudadesEspeciales = [ "tierra del fuego", "santa cruz", "neuquen" ]
 	var property anticuerpos = 10
 	var property inmunidad = new Date()
 	var property criterioDeVacunacion
+	var property historialDeVacunacion = []
 
 	method aumentarAnticuerpos(vacuna) {
 		anticuerpos += vacuna.otorgarAnticuerpos(self)
@@ -27,12 +27,17 @@ class Persona {
 
 // tambien pude haber hecho esEspecial(persona) = ciudad == "tierra del fuego" || "neuquen" || "santa cruz",
 // pero por alguna razon me parecio mas linda y sostenible a largo plazo la opcion de una lista
-	method aplicarseVacuna(vacuna) {
+	method aceptarTurno(vacuna) {
 		if (!self.aceptaVacuna(vacuna)) {
-			throw new UserException(message = "la persona no acepta esta vacuna, intente con otra")
+			throw new UserException(message = "la persona no acepta esta vacuna segun sus criterios, intente con otra")
 		}
+		self.aplicarVacuna(vacuna)
+	}
+
+	method aplicarVacuna(vacuna) {
 		self.aumentarAnticuerpos(vacuna)
 		self.aumentarInmunidad(vacuna)
+		self.agregarVacunaAlHistorial(vacuna)
 	}
 
 	method aceptaVacuna(vacuna) = criterioDeVacunacion.eligeVacuna(self, vacuna)
@@ -46,6 +51,10 @@ class Persona {
 	method costosDeLasVacunasQueAcepta() = self.vacunasQueAcepta().map({ vacuna => vacuna.costoTotalVacuna(self) })
 
 	method costoDeLaVacunaMasBarataPosible() = self.costosDeLasVacunasQueAcepta().min()
+
+	method agregarVacunaAlHistorial(vacuna) {
+		historialDeVacunacion.add(vacuna)
+	}
 
 }
 
@@ -124,7 +133,7 @@ class AstraLaVistaZeneca inherits Vacuna {
 class Combineta inherits Vacuna {
 
 	const property dosisCombinadas = []
-	
+
 	method totalDeDosisCombinadas() = dosisCombinadas.size()
 
 	method listarAnticuerposDeDosisCombinadas(persona) = dosisCombinadas.map({ dosis => dosis.otorgarAnticuerpos(persona) })
@@ -139,7 +148,7 @@ class Combineta inherits Vacuna {
 
 	override method costoExtraDeVacuna(persona) = self.listarCostoExtraDeCadaVacuna(persona).sum() + self.costoExtraPorDosisCombinadas()
 
-	method costoExtraPorDosisCombinadas() = self.totalDeDosisCombinadas()*100
+	method costoExtraPorDosisCombinadas() = self.totalDeDosisCombinadas() * 100
 
 }
 
@@ -201,7 +210,11 @@ object vacunatorioVip {
 
 	method costoDelPlanInicialDeVacunacion() = self.personasCuerdas().map({ persona => persona.costoDeLaVacunaMasBarataPosible() }).sum()
 
+	method enviarTurno(persona, vacuna) = persona.aceptarTurno(vacuna)
+
 }
+
+const ciudadesEspeciales = [ "tierra del fuego", "santa cruz", "neuquen" ]
 
 const vacunasDisponibles = [ paifer, larussa2, larussa5, astraLaVistaZeneca, combineta ]
 
