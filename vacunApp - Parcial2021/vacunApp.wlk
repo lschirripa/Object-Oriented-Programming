@@ -82,13 +82,13 @@ class Vacuna {
 
 class Paifer inherits Vacuna {
 
-	method personaMayorDeEdad(persona, edad) = persona.edad() > edad
+	method personaMayorDe(persona, edad) = persona.edad() > edad
 
 	override method otorgarAnticuerpos(persona) = persona.anticuerpos() * 10
 
-	override method otorgarInmunidad(persona) = if (self.personaMayorDeEdad(persona, 40)) self.agregarMesesDeInmunidad(persona, 6) else self.agregarMesesDeInmunidad(persona, 6)
+	override method otorgarInmunidad(persona) = if (self.personaMayorDe(persona, 40)) self.agregarMesesDeInmunidad(persona, 6) else self.agregarMesesDeInmunidad(persona, 9)
 
-	override method costoExtraDeVacuna(persona) = if (self.personaMayorDeEdad(persona, 18)) 400 else 100
+	override method costoExtraDeVacuna(persona) = if (self.personaMayorDe(persona, 18)) 400 else 100
 
 }
 
@@ -98,7 +98,7 @@ class Larussa inherits Vacuna {
 
 	override method otorgarAnticuerpos(persona) {
 		if (multiplicador > 20) {
-			throw new UserException(message = "el multiplicador debe ser menor o igual a 20, modifiquelo e intente nuevamente")
+			throw new UserException(message = "el multiplicador de esta vacuna debe ser menor o igual a 20, modifiquelo e intente nuevamente")
 		}
 		return persona.anticuerpos() * multiplicador
 	}
@@ -124,6 +124,8 @@ class AstraLaVistaZeneca inherits Vacuna {
 class Combineta inherits Vacuna {
 
 	const property dosisCombinadas = []
+	
+	method totalDeDosisCombinadas() = dosisCombinadas.size()
 
 	method listarAnticuerposDeDosisCombinadas(persona) = dosisCombinadas.map({ dosis => dosis.otorgarAnticuerpos(persona) })
 
@@ -135,7 +137,9 @@ class Combineta inherits Vacuna {
 
 	override method otorgarInmunidad(persona) = self.listarInmunidadDeDosisCombinadas(persona).max()
 
-	override method costoExtraDeVacuna(persona) = self.listarCostoExtraDeCadaVacuna(persona).sum()
+	override method costoExtraDeVacuna(persona) = self.listarCostoExtraDeCadaVacuna(persona).sum() + self.costoExtraPorDosisCombinadas()
+
+	method costoExtraPorDosisCombinadas() = self.totalDeDosisCombinadas()*100
 
 }
 
