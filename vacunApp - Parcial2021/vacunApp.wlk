@@ -44,7 +44,7 @@ class Persona {
 
 	method vacunasQueAcepta() = vacunasDisponibles.filter({ vacuna => self.aceptaVacuna(vacuna) })
 
-	method esTremendoAntivacuna() = self.vacunasQueAcepta() == []
+	method esTremendoAntivacuna() = self.vacunasQueAcepta().isEmpty()
 
 	method vacunaMasBarataPosible() = self.vacunasQueAcepta().min({ vacuna => vacuna.costoTotalVacuna(self) })
 
@@ -206,9 +206,9 @@ object inmunidosaVariable7 inherits InmunidosaVariable(mesesMinimosDeInmunidad =
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 object vacunatorioVip {
 
-	method personasCuerdas() = personasAVacunar.filter({ persona => !persona.esTremendoAntivacuna() })
+	method personasCoherentes() = personasAVacunar.filter({ persona => !persona.esTremendoAntivacuna() })
 
-	method costoDelPlanInicialDeVacunacion() = self.personasCuerdas().map({ persona => persona.costoDeLaVacunaMasBarataPosible() }).sum()
+	method costoDelPlanInicialDeVacunacion() = self.personasCoherentes().map({ persona => persona.costoDeLaVacunaMasBarataPosible() }).sum()
 
 	method enviarTurno(persona, vacuna) = persona.aceptarTurno(vacuna)
 
